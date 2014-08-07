@@ -12,5 +12,7 @@ group :scraper do
 end
 
 group :development do
+  gem 'foreman'
   gem 'guard'
+  gem 'pry'
 end
