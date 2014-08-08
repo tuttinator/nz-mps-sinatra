@@ -1,7 +1,9 @@
+$:.unshift File.dirname(__FILE__)
 require 'rubygems'
 require 'bundler/setup'
 Bundler.require(:default, :web)
-require './config/database'
+
+require 'models/mp'
 
 class NZMPListApp < Sinatra::Base
 
