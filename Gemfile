@@ -4,7 +4,7 @@ gem 'sequel'
 gem 'pg'
 
 group :web do
-  gem 'sinatra'
+  gem 'sinatra', require: 'sinatra/base'
 end
 
 group :scraper do
@@ -15,4 +15,5 @@ group :development do
   gem 'foreman'
   gem 'guard'
   gem 'pry'
+  gem 'rspec'
 end
