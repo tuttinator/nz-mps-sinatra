@@ -9,6 +9,7 @@ end
 
 group :scraper do
   gem 'capybara'
+  gem 'capybara-mechanize'
 end
 
 group :development do
