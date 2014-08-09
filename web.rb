@@ -1,7 +1,9 @@
 require 'rubygems'
 require 'bundler/setup'
 Bundler.require(:default, :web)
-require './config/database'
+DB = Sequel.connect(ENV['DATABASE_URL'])
+
+require 'models/mp'
 
 class NZMPListApp < Sinatra::Base
 
