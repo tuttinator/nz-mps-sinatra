@@ -28,9 +28,9 @@ module Parliament
     end
 
     def call
-      scrape!
       MP.db.transaction do
         MP.truncate
+        scrape!
         @mps.each(&:save)
       end
     end
