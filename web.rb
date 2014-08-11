@@ -4,13 +4,23 @@ require 'rubygems'
 require 'bundler/setup'
 Bundler.require(:default, :web)
 
+require 'json'
+
 require 'models/mp'
 
 class NZMPListApp < Sinatra::Base
 
   set :root, NZMPListApp.root
 
-  get '/mps' do
-    # render all the MPs as JSON
+  get '/parliament/current/mps' do
+    content_type :json
+    mps = MP.all.map(&:as_json)
+    JSON.generate mps
+  end
+
+  get '/parliament/current/mps/:id' do
+    content_type :json
+    mp = MP[params[:id].to_i].as_json
+    JSON.generate mp
   end
 end

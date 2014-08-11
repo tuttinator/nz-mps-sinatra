@@ -15,10 +15,48 @@ MP_LIST_URL = 'http://www.parliament.nz/en-nz/mpp/mps/current?Criteria.ViewAll=1
 module Parliament
   BASE_URL = 'http://www.parliament.nz'
   class MPScraper
+    include Capybara::DSL
+
+    attr_reader :mps
+
     def initialize
       Capybara.current_driver = :mechanize
       Capybara.run_server = false
       Capybara.app_host = BASE_URL
+      Capybara.app = true
+      @mps = []
+    end
+
+    def call
+      scrape!
+      MP.db.transaction do
+        MP.truncate
+        @mps.each(&:save)
+      end
+    end
+
+    def scrape!
+      puts 'Fetching main list'
+      visit '/en-nz/mpp/mps/current?Criteria.ViewAll=1'
+      table_rows = all('table.listing tbody tr')
+      table_rows.each do |tr|
+        cells = tr.all('td')
+        name = cells.first.text
+        link = cells.first.find('a')[:href]
+        electorate_details = cells.last.text
+        construct_record(name, link, electorate_details)
+      end
+    end
+
+    def construct_record(name, link, electorate_details)
+      puts "Visiting #{link}"
+      visit link
+      image = begin
+                find('td.image img')[:src]
+              rescue Capybara::ElementNotFound
+                puts "#{name} does not have a photo"
+              end
+      @mps << MP.parse(name, link, electorate_details, image)
     end
   end
 end

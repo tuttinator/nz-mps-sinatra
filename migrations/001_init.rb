@@ -7,7 +7,8 @@ DB.create_table :mps do
   varchar :first_name
   varchar :last_name
   varchar :party
-  boolean :listmp
+  varchar :electorate
+  boolean :list_mp
   varchar :details_url
   varchar :image_url
 end

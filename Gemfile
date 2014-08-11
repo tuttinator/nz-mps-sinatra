@@ -5,6 +5,7 @@ gem 'pg'
 
 group :web do
   gem 'sinatra', require: 'sinatra/base'
+  gem 'thin'
 end
 
 group :scraper do
