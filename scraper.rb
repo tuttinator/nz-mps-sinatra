@@ -28,9 +28,10 @@ module Parliament
     end
 
     def call
+      scrape!
       MP.db.transaction do
         MP.truncate
-        scrape!
+        DB << "ALTER SEQUENCE mps_id_seq RESTART WITH 1"
         @mps.each(&:save)
       end
     end
