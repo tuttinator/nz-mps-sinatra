@@ -13,7 +13,7 @@ class MP < Sequel::Model
         electorate: electorate,
         list_mp: list_mp,
         details_url: BASE_URL + link,
-        image_url: BASE_URL + image
+        image_url: image ? BASE_URL + image : nil
        )
   end
 
