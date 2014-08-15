@@ -13,13 +13,13 @@ class NZMPListApp < Sinatra::Base
   set :root, NZMPListApp.root
 
   get '/parliament/current/mps.json' do
-    content_type :json
+    content_type :json, 'charset' => 'utf-8'
     mps = MP.all.map(&:as_json)
     JSON.generate mps
   end
 
   get '/parliament/current/mps/:id.json' do
-    content_type :json
+    content_type :json, 'charset' => 'utf-8'
     mp = MP[params[:id].to_i].as_json
     JSON.generate mp
   end
