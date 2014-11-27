@@ -43,7 +43,7 @@ module Parliament
       table_rows.each do |tr|
         cells = tr.all('td')
         name = cells.first.text
-        link = cells.first.find('a')[:href]
+        link = URI.escape cells.first.find('a')[:href]
         electorate_details = cells.last.text
         construct_record(name, link, electorate_details)
       end
